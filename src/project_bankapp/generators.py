@@ -1,8 +1,9 @@
 from typing import Generator, Iterable
 
 
-def filter_by_currency(transactions: Iterable[dict],
-                       currency: str) -> Generator[dict, None, None]:
+def filter_by_currency(
+    transactions: Iterable[dict], currency: str
+) -> Generator[dict, None, None]:
     """Фильтрует транзакции по заданной валюте."""
     for transaction in transactions:
         amount = transaction.get("operationAmount", {})
@@ -10,8 +11,9 @@ def filter_by_currency(transactions: Iterable[dict],
             yield transaction
 
 
-def transaction_descriptions(transactions: Iterable[dict]
-                             ) -> Generator[str, None, None]:
+def transaction_descriptions(
+    transactions: Iterable[dict],
+) -> Generator[str, None, None]:
     """Возвращает описания транзакций по очереди."""
     for transaction in transactions:
         yield transaction.get("description", "Описание отсутствует")
