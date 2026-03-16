@@ -20,3 +20,22 @@
 git clone [https://github.com/smedlu/python_project_bankapp.git](https://github.com/smedlu/python_project_bankapp.git)
 cd project_BankAPP
 poetry install
+## Использование
+
+Проект предоставляет набор инструментов (виджетов и масок), которые можно использовать в своем коде:
+
+```python
+from project_bankapp.widget import mask_account_card, get_date
+
+# Маскировка карты
+print(mask_account_card("Visa Platinum 7000792289606361")) 
+# Вывод: Visa Platinum 7000 79** **** 6361
+
+# Преобразование даты
+print(get_date("2024-03-11T02:26:18.671407")) 
+# Вывод: 11.03.2024
+# Запуск тестов
+poetry run pytest
+
+# Проверка покрытия
+poetry run pytest --cov=src --cov-report term-missing
