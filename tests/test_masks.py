@@ -1,5 +1,7 @@
 import pytest
-from project_bankapp.masks import get_mask_card_number, get_mask_account
+
+from project_bankapp.masks import get_mask_account, get_mask_card_number
+
 
 def test_get_mask_card_number_valid():
     """Тест корректной маскировки карты"""

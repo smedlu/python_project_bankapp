@@ -1,5 +1,7 @@
 import pytest
+
 from project_bankapp.processing import filter_by_state, sort_by_date
+
 
 @pytest.fixture
 def sample_data():
