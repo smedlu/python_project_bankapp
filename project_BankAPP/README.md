@@ -39,3 +39,19 @@ poetry run pytest
 
 # Проверка покрытия
 poetry run pytest --cov=src --cov-report term-missing
+## Модуль generators
+
+Модуль содержит функции-генераторы для эффективной фильтрации и обработки данных транзакций.
+
+### Примеры использования
+
+1. **Фильтрация по валюте:**
+```python
+usd_transactions = filter_by_currency(transactions, "USD")
+for transaction in usd_transactions:
+    print(transaction)
+descriptions = transaction_descriptions(transactions)
+for desc in descriptions:
+    print(desc)
+for card_number in card_number_generator(1, 5):
+    print(card_number) # Выведет: 0000 0000 0000 0001 и т.д.
