@@ -70,4 +70,3 @@ def get_mask_account(account_number: str) -> str:
 
     logger.info(f"Успешно замаскирован счет: {masked}")
     return masked
-
