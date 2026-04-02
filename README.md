@@ -55,3 +55,8 @@ for desc in descriptions:
     print(desc)
 for card_number in card_number_generator(1, 5):
     print(card_number) # Выведет: 0000 0000 0000 0001 и т.д.
+### Модуль generators
+Содержит функции для обработки транзакций с помощью генераторов:
+- `filter_by_currency`: фильтрует данные по валюте.
+- `transaction_descriptions`: извлекает описания операций.
+- `card_number_generator`: генерирует номера карт в формате XXXX XXXX XXXX XXXX.
