@@ -20,3 +20,14 @@
 git clone [https://github.com/smedlu/python_project_bankapp.git](https://github.com/smedlu/python_project_bankapp.git)
 cd project_BankAPP
 poetry install
+## Модуль generators
+Реализованы функции для эффективной фильтрации и генерации данных:
+* `filter_by_currency` — фильтрация транзакций по валюте.
+* `transaction_descriptions` — получение описаний операций.
+* `card_number_generator` — генерация номеров карт в заданном диапазоне.
+
+### Запуск тестов
+```bash
+pytest
+### Декораторы
+* `log` — декоратор для автоматического логирования работы функций (результат, ошибки, входные параметры).
