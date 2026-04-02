@@ -63,5 +63,3 @@ def get_transactions_data(path: str) -> list[dict[str, Any]]:
             f"Произошла непредвиденная ошибка при чтении файла {path}: {e}"
         )
         return []
-
-
