@@ -3,7 +3,9 @@ import os
 
 
 # --- НАСТРОЙКА ЛОГЕРА ---
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+ROOT_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(__file__))
+)
 LOG_DIR = os.path.join(ROOT_DIR, 'logs')
 
 if not os.path.exists(LOG_DIR):
@@ -18,7 +20,9 @@ file_handler = logging.FileHandler(
     mode='w',
     encoding='utf-8'
 )
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Разбиваем форматтер на две строки, чтобы уложиться в 79 символов
+log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+file_formatter = logging.Formatter(log_format)
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
@@ -33,8 +37,10 @@ def get_mask_card_number(card_number: str) -> str:
     cleaned_number = card_number.replace(" ", "")
 
     if len(cleaned_number) != 16 or not cleaned_number.isdigit():
-        # Логируем ошибку перед raise
-        logger.error(f"Ошибка маскировки карты: неверный формат номера '{card_number}'")
+        # Переносим длинное сообщение лога
+        logger.error(
+            f"Ошибка маскировки карты: неверный формат номера '{card_number}'"
+        )
         raise ValueError("Номер карты должен состоять из 16 цифр")
 
     first_part = cleaned_number[:4]
@@ -53,8 +59,10 @@ def get_mask_account(account_number: str) -> str:
     cleaned_number = account_number.replace(" ", "")
 
     if len(cleaned_number) < 4 or not cleaned_number.isdigit():
-        # Логируем ошибку перед raise
-        logger.error(f"Ошибка маскировки счета: слишком короткий номер или не цифры '{account_number}'")
+        # Переносим длинное сообщение лога
+        logger.error(
+            f"Ошибка маскировки счета: неверный формат '{account_number}'"
+        )
         raise ValueError("Номер счета должен содержать минимум 4 цифры")
 
     last_four = cleaned_number[-4:]
@@ -62,3 +70,5 @@ def get_mask_account(account_number: str) -> str:
 
     logger.info(f"Успешно замаскирован счет: {masked}")
     return masked
+
+
