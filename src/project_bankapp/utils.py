@@ -64,3 +64,4 @@ def get_transactions_data(path: str) -> list[dict[str, Any]]:
         )
         return []
 
+
