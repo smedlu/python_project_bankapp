@@ -1,0 +1,32 @@
+On branch feature/search-and-main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   data/operations.json
+	new file:   main.py
+	modified:   poetry.lock
+	new file:   pyproject.toml
+	new file:   src/project_bankapp/__init__.py
+	new file:   src/project_bankapp/external_api.py
+	new file:   src/project_bankapp/generators.py
+	new file:   src/project_bankapp/masks.py
+	new file:   src/project_bankapp/processing.py
+	new file:   src/project_bankapp/readers.py
+	new file:   src/project_bankapp/utils.py
+	new file:   src/project_bankapp/widget.py
+	new file:   tests/test_external_api.py
+	new file:   tests/test_generators.py
+	new file:   tests/test_masks.py
+	new file:   tests/test_processing.py
+	new file:   tests/test_readers.py
+	new file:   tests/test_utils.py
+	new file:   tests/test_widget.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	commit_msg.txt
+	python_project_bankapp/
+
+  
+- Added modules: masks, external_api, generators  
+- Added full test suite  
+- Code coverage: 99% 
