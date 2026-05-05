@@ -1,5 +1,6 @@
-import pytest
-from unittest.mock import patch, mock_open
+import json
+from unittest.mock import mock_open, patch
+
 from project_bankapp.utils import get_transactions_data
 
 
@@ -20,3 +21,39 @@ def test_get_transactions_data_not_found(mock_exists):
     mock_exists.return_value = False  # Файла нет
     result = get_transactions_data("non_existent.json")
     assert result == []
+
+
+@patch("os.path.exists")
+@patch("builtins.open", new_callable=mock_open)
+def test_get_transactions_data_invalid_json(mock_file, mock_exists):
+    """Тест: файл существует, но содержит некорректный JSON."""
+    mock_exists.return_value = True
+    mock_file.return_value.read.return_value = '{"invalid": json}'
+
+    with patch("json.load",
+               side_effect=json.JSONDecodeError("Invalid JSON", "", 0)):
+        result = get_transactions_data("path/to/file.json")
+        assert result == []
+
+
+@patch("os.path.exists")
+@patch("builtins.open", new_callable=mock_open)
+def test_get_transactions_data_not_list(mock_file, mock_exists):
+    """Тест: данные не список."""
+    mock_exists.return_value = True
+
+    with patch("json.load",
+               return_value={"id": 1, "amount": 100}):
+        result = get_transactions_data("path/to/file.json")
+        assert result == []
+
+
+@patch("os.path.exists")
+@patch("builtins.open", new_callable=mock_open)
+def test_get_transactions_data_unexpected_error(mock_file, mock_exists):
+    """Тест: неожиданная ошибка при чтении файла."""
+    mock_exists.return_value = True
+
+    with patch("builtins.open", side_effect=Exception("Unexpected error")):
+        result = get_transactions_data("path/to/file.json")
+        assert result == []

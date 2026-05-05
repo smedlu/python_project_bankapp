@@ -1,10 +1,8 @@
 import pytest
 
-from project_bankapp.generators import (
-                                        card_number_generator,
+from project_bankapp.generators import (card_number_generator,
                                         filter_by_currency,
-                                        transaction_descriptions
-                                        )
+                                        transaction_descriptions)
 
 
 @pytest.fixture
@@ -48,6 +46,7 @@ def test_filter_by_currency_empty_or_no_match(sample_transactions):
 
     # Тест на пустой список
     assert list(filter_by_currency([], "USD")) == []
+
 
 def test_transaction_descriptions(sample_transactions):
     """Тест для проверки описаний транзакций"""
