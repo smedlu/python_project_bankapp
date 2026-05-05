@@ -1,71 +1,36 @@
-import logging
-import os
-
-# --- НАСТРОЙКА ЛОГЕРА ---
-ROOT_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(__file__))
-)
-LOG_DIR = os.path.join(ROOT_DIR, 'logs')
-
-if not os.path.exists(LOG_DIR):
-    os.makedirs(LOG_DIR)
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-
-# Настраиваем FileHandler (mode='w' — перезапись)
-file_handler = logging.FileHandler(
-    os.path.join(LOG_DIR, 'masks.log'),
-    mode='w',
-    encoding='utf-8'
-)
-# Разбиваем форматтер на две строки, чтобы уложиться в 79 символов
-log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-file_formatter = logging.Formatter(log_format)
-file_handler.setFormatter(file_formatter)
-logger.addHandler(file_handler)
-
-
-# ------------------------
-
-
 def get_mask_card_number(card_number: str) -> str:
-    """Маскирует номер банковской карты в формате XXXX XX** **** XXXX."""
-    logger.info(f"Начало маскировки карты: {card_number}")
+    """
+    Маскирует номер карты по формату 0000 00** **** 0000.
 
-    cleaned_number = card_number.replace(" ", "")
+    Args:
+        card_number (str): Номер карты (16 цифр).
 
-    if len(cleaned_number) != 16 or not cleaned_number.isdigit():
-        # Переносим длинное сообщение лога
-        logger.error(
-            f"Ошибка маскировки карты: неверный формат номера '{card_number}'"
-        )
+    Returns:
+        str: Замаскированный номер карты.
+
+    Raises:
+        ValueError: Если номер карты не состоит из 16 цифр.
+    """
+    card_number = card_number.replace(' ', '')
+    if not card_number.isdigit() or len(card_number) != 16:
         raise ValueError("Номер карты должен состоять из 16 цифр")
-
-    first_part = cleaned_number[:4]
-    second_part = cleaned_number[4:6]
-    last_part = cleaned_number[-4:]
-
-    masked = f"{first_part} {second_part}** **** {last_part}"
-    logger.info(f"Успешно замаскирована карта: {masked}")
-    return masked
+    return f"{card_number[:4]} {card_number[4:6]}** **** {card_number[-4:] }"
 
 
 def get_mask_account(account_number: str) -> str:
-    """Маскирует номер счета в формате **XXXX."""
-    logger.info(f"Начало маскировки счета: {account_number}")
+    """
+    Маскирует номер счёта по формату **0000.
 
-    cleaned_number = account_number.replace(" ", "")
+    Args:
+        account_number (str): Номер счёта.
 
-    if len(cleaned_number) < 4 or not cleaned_number.isdigit():
-        # Переносим длинное сообщение лога
-        logger.error(
-            f"Ошибка маскировки счета: неверный формат '{account_number}'"
-        )
+    Returns:
+        str: Замаскированный номер счёта.
+
+    Raises:
+        ValueError: Если номер счёта содержит менее 4 цифр.
+    """
+    account_number = account_number.replace(' ', '')
+    if not account_number.isdigit() or len(account_number) < 4:
         raise ValueError("Номер счета должен содержать минимум 4 цифры")
-
-    last_four = cleaned_number[-4:]
-    masked = f"**{last_four}"
-
-    logger.info(f"Успешно замаскирован счет: {masked}")
-    return masked
+    return f"**{account_number[-4:]}"

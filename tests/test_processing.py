@@ -1,32 +1,44 @@
 import pytest
-
-from project_bankapp.processing import filter_by_state, sort_by_date
+from project_bankapp.processing import (
+    process_bank_search,
+    process_bank_operations
+)
 
 
 @pytest.fixture
 def sample_data():
     return [
-        {"id": 1, "state": "EXECUTED", "date": "2019-07-10T20:30:10.100100"},
-        {"id": 2, "state": "CANCELED", "date": "2020-11-15T15:10:05.500500"},
-        {"id": 3, "state": "EXECUTED", "date": "2018-01-01T10:00:00.000000"},
+        {"description": "Перевод с карты на карту"},
+        {"description": "Открытие вклада"},
+        {"description": "Перевод организации"},
+        {"description": "Перевод с карты на карту"},
     ]
 
 
-def test_filter_by_state(sample_data):
-    """Тест фильтрации по статусу"""
-    executed = filter_by_state(sample_data, "EXECUTED")
-    assert len(executed) == 2
-    assert all(item["state"] == "EXECUTED" for item in executed)
+def test_process_bank_search(sample_data):
+    result = process_bank_search(sample_data, "перевод")
+    assert len(result) == 3
+    assert all("перевод" in t["description"].lower() for t in result)
 
 
-def test_sort_by_date_desc(sample_data):
-    """Тест сортировки по дате (по умолчанию — убывание)"""
-    sorted_data = sort_by_date(sample_data)
-    assert sorted_data[0]["id"] == 2  # 2020 год
-    assert sorted_data[-1]["id"] == 3  # 2018 год
+def test_process_bank_search_no_match(sample_data):
+    result = process_bank_search(sample_data, "неизвестно")
+    assert result == []
 
 
-def test_sort_by_date_asc(sample_data):
-    """Тест сортировки по дате (возрастание)"""
-    sorted_data = sort_by_date(sample_data, reverse=False)
-    assert sorted_data[0]["id"] == 3
+def test_process_bank_operations(sample_data):
+    categories = ["Перевод с карты на карту",
+                  "Открытие вклада",
+                  "Перевод организации"]
+    result = process_bank_operations(sample_data, categories)
+    assert result == {
+        "Перевод с карты на карту": 2,
+        "Открытие вклада": 1,
+        "Перевод организации": 1,
+    }
+
+
+def test_process_bank_operations_no_match(sample_data):
+    categories = ["Неизвестная категория"]
+    result = process_bank_operations(sample_data, categories)
+    assert result == {"Неизвестная категория": 0}

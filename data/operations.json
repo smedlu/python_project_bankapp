@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "state": "EXECUTED",
+        "date": "2019-08-12T11:30:32Z",
+        "operationAmount": {
+            "amount": 40542,
+            "currency": {
+                "name": "руб.",
+                "code": "RUB"
+            }
+        },
+        "description": "Открытие вклада",
+        "to": "Счет **4321"
+    },
+    {
+        "id": 2,
+        "state": "EXECUTED",
+        "date": "2019-12-11T23:00:58Z",
+        "operationAmount": {
+            "amount": 130,
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод с карты на карту",
+        "from": "MasterCard 7771 27** **** 3727",
+        "to": "Visa Platinum 1293 38** **** 9203"
+    }
+]
