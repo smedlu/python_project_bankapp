@@ -1,4 +1,5 @@
 import pytest
+
 from project_bankapp.widget import get_date, mask_account_card
 
 
